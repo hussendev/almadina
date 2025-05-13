@@ -17,30 +17,6 @@ class RegisterView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.transparent,
-    //     elevation: 0,
-    //     leading: IconButton(
-    //       icon: const Icon(Icons.arrow_back_ios, color: AppTheme.textColor),
-    //       onPressed: () => Get.back(),
-    //     ),
-    //   ),
-    //   body: Obx(() {
-    //     return SafeArea(
-    //       child: Stack(
-    //         children: [
-    //           _buildRegisterForm(context),
-    //           if (controller.isLoading.value)
-    //             const FullScreenLoader(
-    //               message: 'جاري التسجيل...',
-    //             ),
-    //         ],
-    //       ),
-    //     );
-    //   }),
-    // );
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -53,33 +29,10 @@ class RegisterView extends GetView<AuthController> {
                 fit: BoxFit.fill,
               ),
               _buildRegisterForm(context),
-              // if (controller.isLoading.value)
-              //   const FullScreenLoader(
-              //     message: 'جاري تسجيل الدخول...',
-              //   ),
+
             ],
           ),
         )
-      // body: Obx(() {
-      //   return SafeArea(
-      //     child: Stack(
-      //       children: [
-      //         Image.asset(
-      //           AssetsPath.loginBackground,
-      //           width: 390.w,
-      //           height: 990.h,
-      //           fit: BoxFit.fill,
-      //         ),
-      //
-      //         // _buildLoginForm(context),
-      //         // if (controller.isLoading.value)
-      //         //   const FullScreenLoader(
-      //         //     message: 'جاري تسجيل الدخول...',
-      //         //   ),
-      //       ],
-      //     ),
-      //   );
-      // }),
     );
   }
 
@@ -99,7 +52,7 @@ class RegisterView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child: AuthTextField(
-                      controller: controller.mobileController,
+                      controller: controller.registerMobileController,
                       label: '',
                       hint: AppStrings.mobile,
                       keyboardType: TextInputType.phone,
@@ -110,9 +63,9 @@ class RegisterView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child: AuthTextField(
-                      controller: controller.mobileController,
+                      controller: controller.firstNameController,
                       label: '',
-                      hint: AppStrings.name,
+                      hint: AppStrings.firstName,
                       keyboardType: TextInputType.name,),
                   ),
                   const SizedBox(height: 20),
@@ -120,7 +73,17 @@ class RegisterView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child: AuthTextField(
-                      controller: controller.mobileController,
+                      controller: controller.secondNameController,
+                      label: '',
+                      hint: AppStrings.secondName,
+                      keyboardType: TextInputType.name,),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 60,
+                    width: 275,
+                    child: AuthTextField(
+                      controller: controller.emailController,
                       label: '',
                       hint: AppStrings.email,
                       keyboardType: TextInputType.name,),
@@ -130,20 +93,22 @@ class RegisterView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child:  AuthTextField(
-                      controller: controller.passwordController,
+                      controller: controller.registerPasswordController,
                       label: '',
                       hint: AppStrings.secretCode,
                       obscureText: true,
                     ),
                   ),
                   const SizedBox(height: 25),
-                  SizedBox(
-                    height: 52,
-                    width: 275,
-                    child:  CustomButton(
-                      text: AppStrings.register,
-                      onPressed: () => controller.login(),
-                      type: ButtonType.primary,
+                  Obx(
+                    () => controller.isLoading.value ? CircularProgressIndicator(): SizedBox(
+                      height: 52,
+                      width: 275,
+                      child:  CustomButton(
+                        text: AppStrings.register,
+                        onPressed: () => controller.register(),
+                        type: ButtonType.primary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),

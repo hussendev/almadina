@@ -8,42 +8,60 @@ class UserModel {
   final int id;
 
   @HiveField(1)
-  final String name;
+  final String firstName;
 
   @HiveField(2)
-  final String mobile;
+  final String lastName;
 
   @HiveField(3)
-  final String? email;
+  final String mobile;
 
   @HiveField(4)
-  final String token;
+  final String? email;
+
+  @HiveField(5)
+  final String password;
+
+  @HiveField(6)
+  final DateTime createdAt;
+
+  @HiveField(7)
+  final DateTime updatedAt;
 
   UserModel({
     required this.id,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.mobile,
     this.email,
-    required this.token,
+    required this.password,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
-      name: json['name'],
-      mobile: json['mobile'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
       email: json['email'],
-      token: json['token'],
+      mobile: json['phone'],
+      password: json['password'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'first_name': firstName,
+      'last_name': lastName,
       'mobile': mobile,
       'email': email,
-      'token': token,
+      'password': password,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 }

@@ -19,8 +19,10 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
 
   // Form controllers for register
-  final nameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final secondNameController = TextEditingController();
   final registerMobileController = TextEditingController();
+  final emailController = TextEditingController();
   final registerPasswordController = TextEditingController();
   final secretCodeController = TextEditingController();
 
@@ -34,7 +36,9 @@ class AuthController extends GetxController {
   void onClose() {
     mobileController.dispose();
     passwordController.dispose();
-    nameController.dispose();
+    firstNameController.dispose();
+    secondNameController.dispose();
+    emailController.dispose();
     registerMobileController.dispose();
     registerPasswordController.dispose();
     secretCodeController.dispose();
@@ -54,45 +58,44 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
-    Get.offAllNamed(AppRoutes.HOME);
-    // if (mobileController.text.isEmpty || passwordController.text.isEmpty) {
-    //
-    //   error.value = 'الرجاء إدخال جميع البيانات المطلوبة';
-    //   return;
-    // }
-    //
-    // try {
-    //   isLoading.value = true;
-    //   error.value = null;
-    //
-    //   final result = await _authRepository.login(
-    //     mobile: mobileController.text,
-    //     password: passwordController.text,
-    //   );
-    //
-    //   user.value = result;
-    //   clearLoginForm();
-    //
-    //   Get.offAllNamed(AppRoutes.HOME);
-    //   Get.snackbar(
-    //     'نجاح',
-    //     'تم تسجيل الدخول بنجاح',
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     backgroundColor: Colors.green,
-    //     colorText: Colors.white,
-    //   );
-    // } catch (e) {
-    //   error.value = e.toString();
-    //   Get.snackbar(
-    //     'خطأ',
-    //     error.value ?? 'حدث خطأ أثناء تسجيل الخروج',
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     backgroundColor: Colors.red,
-    //     colorText: Colors.white,
-    //   );
-    // } finally {
-    //   isLoading.value = false;
-    // }
+    // Get.offAllNamed(AppRoutes.HOME);
+    if (mobileController.text.isEmpty || passwordController.text.isEmpty) {
+      error.value = 'الرجاء إدخال جميع البيانات المطلوبة';
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      error.value = null;
+
+      final result = await _authRepository.login(
+        phone: mobileController.text,
+        password: passwordController.text,
+      );
+
+      user.value = result;
+      clearLoginForm();
+
+      Get.offAllNamed(AppRoutes.HOME);
+      Get.snackbar(
+        'نجاح',
+        'تم تسجيل الدخول بنجاح',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      error.value = e.toString();
+      Get.snackbar(
+        'خطأ',
+        error.value ?? 'حدث خطأ أثناء تسجيل الخروج',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void clearLoginForm() {
@@ -101,18 +104,23 @@ class AuthController extends GetxController {
   }
 
   void clearRegisterForm() {
-    nameController.clear();
+    firstNameController.clear();
+    secondNameController.clear();
     registerMobileController.clear();
+    emailController.clear();
     registerPasswordController.clear();
     secretCodeController.clear();
   }
 
 
   Future<void> register() async {
-    if (nameController.text.isEmpty ||
+    print(registerMobileController.text.isEmpty);
+    // print(firstNameController.text.isEmpty ||secondNameController.text.isEmpty||emailController.text.isEmpty||
+    //     registerMobileController.text.isEmpty ||
+    //     registerPasswordController.text.isEmpty);
+    if (firstNameController.text.isEmpty ||secondNameController.text.isEmpty||emailController.text.isEmpty||
         registerMobileController.text.isEmpty ||
-        registerPasswordController.text.isEmpty ||
-        secretCodeController.text.isEmpty) {
+        registerPasswordController.text.isEmpty) {
       error.value = 'الرجاء إدخال جميع البيانات المطلوبة';
       return;
     }
@@ -122,10 +130,11 @@ class AuthController extends GetxController {
       error.value = null;
 
       final result = await _authRepository.register(
-        name: nameController.text,
+        firstName: firstNameController.text,
+        secondName: secondNameController.text,
         mobile: registerMobileController.text,
+        email: emailController.text,
         password: registerPasswordController.text,
-        secretCode: secretCodeController.text,
       );
 
       user.value = result;
@@ -141,6 +150,7 @@ class AuthController extends GetxController {
       );
     } catch (e) {
       error.value = e.toString();
+      print(error.value);
       Get.snackbar(
         'خطأ',
         error.value ?? 'حدث خطأ أثناء التسجيل',
@@ -155,38 +165,38 @@ class AuthController extends GetxController {
 
 
 
-  Future<void> forgotPassword(String mobile) async {
-    if (mobile.isEmpty) {
-      error.value = 'الرجاء إدخال رقم الجوال';
-      return;
-    }
-
-    try {
-      isLoading.value = true;
-      error.value = null;
-
-      await _authRepository.forgotPassword(mobile: mobile);
-
-      Get.snackbar(
-        'نجاح',
-        'تم إرسال رمز التحقق إلى رقم الجوال',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    } catch (e) {
-      error.value = e.toString();
-      Get.snackbar(
-        'خطأ',
-        error.value ?? 'حدث خطأ أثناء إرسال رمز التحقق',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> forgotPassword(String mobile) async {
+  //   if (mobile.isEmpty) {
+  //     error.value = 'الرجاء إدخال رقم الجوال';
+  //     return;
+  //   }
+  //
+  //   try {
+  //     isLoading.value = true;
+  //     error.value = null;
+  //
+  //     await _authRepository.forgotPassword(mobile: mobile);
+  //
+  //     Get.snackbar(
+  //       'نجاح',
+  //       'تم إرسال رمز التحقق إلى رقم الجوال',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.green,
+  //       colorText: Colors.white,
+  //     );
+  //   } catch (e) {
+  //     error.value = e.toString();
+  //     Get.snackbar(
+  //       'خطأ',
+  //       error.value ?? 'حدث خطأ أثناء إرسال رمز التحقق',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   Future<void> logout() async {
     try {

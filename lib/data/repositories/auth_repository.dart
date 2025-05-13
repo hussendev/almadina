@@ -13,14 +13,15 @@ class AuthRepository {
   }
 
   Future<UserModel> login({
-    required String mobile,
+    required String phone,
     required String password,
   }) async {
     try {
-      final response = await _apiProvider.login(mobile, password);
+
+      final response = await _apiProvider.login(phone, password);
 
       if (response.statusCode == 200) {
-        final user = UserModel.fromJson(response.body['data']);
+        final user = UserModel.fromJson(response.body['customer']);
         await _saveUserData(user);
         return user;
       } else {
@@ -32,16 +33,17 @@ class AuthRepository {
   }
 
   Future<UserModel> register({
-    required String name,
+    required String firstName,
+    required String secondName,
     required String mobile,
+    required String email,
     required String password,
-    required String secretCode,
   }) async {
     try {
-      final response = await _apiProvider.register(name, mobile, password, secretCode);
+      final response = await _apiProvider.register(firstName:firstName ,seceondName: secondName, mobile: mobile,email: email,password: password);
+      if (response.statusCode == 201) {
 
-      if (response.statusCode == 200) {
-        final user = UserModel.fromJson(response.body['data']);
+        final user = UserModel.fromJson(response.body['customer']);
         await _saveUserData(user);
         return user;
       } else {
@@ -52,37 +54,37 @@ class AuthRepository {
     }
   }
 
-  Future<void> forgotPassword({required String mobile}) async {
-    try {
-      final response = await _apiProvider.forgotPassword(mobile);
-
-      if (response.statusCode != 200) {
-        throw response.body['message'] ?? 'Failed to send reset code';
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> resetPassword({
-    required String mobile,
-    required String code,
-    required String newPassword,
-  }) async {
-    try {
-      final response = await _apiProvider.resetPassword(mobile, code, newPassword);
-
-      if (response.statusCode != 200) {
-        throw response.body['message'] ?? 'Failed to reset password';
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
+  // Future<void> forgotPassword({required String mobile}) async {
+  //   try {
+  //     final response = await _apiProvider.forgotPassword(mobile);
+  //
+  //     if (response.statusCode != 200) {
+  //       throw response.body['message'] ?? 'Failed to send reset code';
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  //
+  // Future<void> resetPassword({
+  //   required String mobile,
+  //   required String code,
+  //   required String newPassword,
+  // }) async {
+  //   try {
+  //     final response = await _apiProvider.resetPassword(mobile, code, newPassword);
+  //
+  //     if (response.statusCode != 200) {
+  //       throw response.body['message'] ?? 'Failed to reset password';
+  //     }
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  //
   Future<void> logout() async {
     try {
-      await _apiProvider.logout();
+      // await _apiProvider.logout();
       await _clearUserData();
     } catch (e) {
       // Even if API fails, clear local data
@@ -93,7 +95,7 @@ class AuthRepository {
 
   Future<void> _saveUserData(UserModel user) async {
     await _storageService.saveUser(user);
-    await _storageService.saveToken(user.token);
+    await _storageService.saveToken(user.password);
   }
 
   Future<void> _clearUserData() async {

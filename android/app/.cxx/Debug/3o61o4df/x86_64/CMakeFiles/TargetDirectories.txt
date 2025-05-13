@@ -1,0 +1,2 @@
+D:/Flutter/almadina/android/app/.cxx/Debug/3o61o4df/x86_64/CMakeFiles/edit_cache.dir
+D:/Flutter/almadina/android/app/.cxx/Debug/3o61o4df/x86_64/CMakeFiles/rebuild_cache.dir

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../services/storage_service.dart';
 
 class ApiProvider extends GetConnect {
-  final String _baseUrl = 'https://api.yourdomain.com/api';
+  final String _baseUrl = 'https://al-madenah.com/api';
 
   @override
   void onInit() {
@@ -35,49 +35,56 @@ class ApiProvider extends GetConnect {
     super.onInit();
   }
 
-  Future<Response> login(String mobile, String password) async {
+  Future<Response> login(String phone, String password) async {
     final body = jsonEncode({
-      'mobile': mobile,
+      'phone': phone,
       'password': password,
     });
-    return await post('/auth/login', body);
+    return await post('/customers/login', body);
   }
 
-  Future<Response> register(String name, String mobile, String password, String secretCode) async {
+  Future<Response> register(
+      {
+        required String firstName,
+        required String seceondName,
+        required String email,
+        required String mobile,
+        required String password}) async {
     final body = jsonEncode({
-      'name': name,
-      'mobile': mobile,
+      'first_name': firstName,
+      'last_name': seceondName,
+      'email': email,
+      'phone': mobile,
       'password': password,
-      'secret_code': secretCode,
     });
-    return await post('/auth/register', body);
+    return await post('/customers/signup', body);
   }
 
-  Future<Response> forgotPassword(String mobile) async {
+  Future<Response> forgotPassword(String email) async {
     final body = jsonEncode({
-      'mobile': mobile,
+      'email': email,
     });
-    return await post('/auth/forgot-password', body);
+    return await post('/customers/forgot-password', body);
   }
 
-  Future<Response> resetPassword(String mobile, String code, String newPassword) async {
-    final body = jsonEncode({
-      'mobile': mobile,
-      'code': code,
-      'new_password': newPassword,
-    });
-    return await post('/auth/reset-password', body);
-  }
-
+  // Future<Response> resetPassword(String mobile, String code, String newPassword) async {
+  //   final body = jsonEncode({
+  //     'mobile': mobile,
+  //     'code': code,
+  //     'new_password': newPassword,
+  //   });
+  //   return await post('/auth/reset-password', body);
+  // }
+  //
   Future<Response> logout() async {
     return await post('/auth/logout', null);
   }
-
-  Future<Response> getUserProfile() async {
-    return await get('/user/profile');
-  }
-
-  Future<Response> updateUserProfile(Map<String, dynamic> data) async {
-    return await put('/user/profile', jsonEncode(data));
-  }
+  //
+  // Future<Response> getUserProfile() async {
+  //   return await get('/user/profile');
+  // }
+  //
+  // Future<Response> updateUserProfile(Map<String, dynamic> data) async {
+  //   return await put('/user/profile', jsonEncode(data));
+  // }
 }

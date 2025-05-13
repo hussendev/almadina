@@ -9,7 +9,8 @@ class AppStrings {
   static const String resetPassword = 'إعادة تعيين كلمة المرور';
   static const String mobile = 'الجوال';
   // static const String password = 'كلمة المرور';
-  static const String name = 'الاسم';
+  static const String firstName = 'الاسم الاول';
+  static const String secondName = 'الاسم الثاني';
   static const String secretCode = 'الرقم السري';
   static const String enterMobile = 'أدخل رقم الجوال';
   static const String enterPassword = 'أدخل كلمة المرور';

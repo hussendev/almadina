@@ -5,13 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app/theme.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/assets_path.dart';
+import '../../../data/repositories/auth_repository.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/loading_indicator.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+   HomeView({Key? key}) : super(key: key);
 
+  final authController= Get.put(AuthRepository());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +34,7 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      // body: Obx(() {
-      //   if (controller.isLoading.value) {
-      //     return const Center(
-      //       child: LoadingIndicator(),
-      //     );
-      //   }
-      //
-      //   return SafeArea(
-      //     child: _buildHomeContent(context),
-      //   );
-      // }),
-      // bottomNavigationBar: _buildBottomNavigationBar(),
+
     );
   }
 
@@ -73,6 +64,19 @@ class HomeView extends GetView<HomeController> {
             child:  CustomButton(
               text: AppStrings.discount,
               onPressed: (){},
+              // onPressed: () => controller.login(),
+              type: ButtonType.primary,
+            ),
+          ),
+          SizedBox(height: 50.h),
+          SizedBox(
+            height: 52,
+            width: 275,
+            child:  CustomButton(
+              text: AppStrings.logout,
+              onPressed: ()async{
+                await authController.logout();
+              },
               // onPressed: () => controller.login(),
               type: ButtonType.primary,
             ),
@@ -164,7 +168,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildGreeting() {
     final user = controller.user.value;
-    final userName = user?.name ?? 'مستخدم';
+    final userName = user?.firstName ?? 'مستخدم';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +271,7 @@ class HomeView extends GetView<HomeController> {
           ),
           SizedBox(height: 16.h),
           Text(
-            user?.name ?? 'مستخدم',
+            user?.firstName ?? 'مستخدم',
             style: TextStyle(
               fontSize: 24.sp,
               fontWeight: FontWeight.bold,

@@ -36,7 +36,7 @@ class AppRoutes {
     ),
     GetPage(
       name: HOME,
-      page: () => const HomeView(),
+      page: () =>  HomeView(),
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),

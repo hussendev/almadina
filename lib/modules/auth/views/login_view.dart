@@ -94,13 +94,15 @@ class LoginView extends GetView<AuthController> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  SizedBox(
-                    height: 52,
-                    width: 275,
-                    child:  CustomButton(
-                      text: AppStrings.login,
-                      onPressed: () => controller.login(),
-                      type: ButtonType.primary,
+                  Obx(
+                    () => controller.isLoading.value ? CircularProgressIndicator() : SizedBox(
+                      height: 52,
+                      width: 275,
+                      child:  CustomButton(
+                        text: AppStrings.login,
+                        onPressed: () => controller.login(),
+                        type: ButtonType.primary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),
