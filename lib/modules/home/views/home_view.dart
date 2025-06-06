@@ -27,10 +27,6 @@ class HomeView extends GetView<HomeController> {
               fit: BoxFit.fill,
             ),
             _buildHomeContent(context),
-            // if (controller.isLoading.value)
-            //   const FullScreenLoader(
-            //     message: 'جاري تسجيل الدخول...',
-            //   ),
           ],
         ),
       ),
@@ -52,8 +48,8 @@ class HomeView extends GetView<HomeController> {
             width: 275,
             child:  CustomButton(
               text: AppStrings.home,
-              onPressed: (){},
-              // onPressed: () => controller.login(),
+              onPressed: ()async =>await controller.launchURL('https://al-madenah.com/') ,
+
               type: ButtonType.primary,
             ),
           ),
@@ -63,8 +59,7 @@ class HomeView extends GetView<HomeController> {
             width: 275,
             child:  CustomButton(
               text: AppStrings.discount,
-              onPressed: (){},
-              // onPressed: () => controller.login(),
+              onPressed: ()async =>await controller.launchURL('https://al-madenah.com/') ,
               type: ButtonType.primary,
             ),
           ),

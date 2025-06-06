@@ -5,8 +5,20 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    println "Loading keystore properties from: ${keystorePropertiesFile.absolutePath}"
+    println "Keystore properties file exists: ${keystorePropertiesFile.exists()}"
+    println "Keystore properties file size: ${keystorePropertiesFile.length()} bytes"
+    println "Keystore properties file last modified: ${new Date(keystorePropertiesFile.lastModified())}"
+
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
-    namespace = "com.example.almadina"
+    namespace = "com.almadina.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "25.1.8937393"
 
@@ -21,7 +33,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.almadina"
+        applicationId = "com.almadina.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -29,13 +41,58 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                println "Using release signing config from keystore properties."
+                // Use the keystore properties for signing
+                println "Keystore file: ${keystoreProperties['storeFile']}"
+                println "Keystore password: ${keystoreProperties['storePassword']}"
+                println "Key alias: ${keystoreProperties['keyAlias']}"
+                println "Key password: ${keystoreProperties['keyPassword']}"
+                // Ensure the keystore file exists
+                if (!new File(keystoreProperties['storeFile']).exists()) {
+                    throw new GradleException("Keystore file not found: ${keystoreProperties['storeFile']}")
+                }
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            } else {
+                println "Warning: Keystore properties file not found. Using debug signing config."
+            }
+
+
+        }
+    }
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            signingConfig signingConfigs.debug
         }
+        release {
+            // Use release signing config if available, otherwise debug
+            signingConfig signingConfigs.release
+
+            // Enable code shrinking and obfuscation
+            minifyEnabled true
+            shrinkResources true
+
+            // ProGuard files for code optimization
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // Disable debugging in release
+            debuggable false
+
+            // Enable ZIP alignment for better performance
+            zipAlignEnabled true
+        }
+    }
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libjsc.so'
     }
 }
 

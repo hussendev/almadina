@@ -10,6 +10,15 @@
 .svn/
 migrate_working_dir/
 
+# Keystore files - NEVER commit these!
+*.jks
+*.keystore
+android/key.properties
+android/*.jks
+android/*.keystore
+
+# Other sensitive files
+key.properties
 # IntelliJ related
 *.iml
 *.ipr

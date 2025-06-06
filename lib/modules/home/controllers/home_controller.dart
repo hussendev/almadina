@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../data/models/user_model.dart';
@@ -33,6 +35,19 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      // Show error message if URL couldn't be launched
+      Get.snackbar(
+        'خطأ',
+        'لا يمكن فتح الرابط',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
   void changeTabIndex(int index) {
     selectedIndex.value = index;
   }

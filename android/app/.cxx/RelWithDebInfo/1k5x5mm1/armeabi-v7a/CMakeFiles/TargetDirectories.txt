@@ -1,0 +1,2 @@
+D:/Flutter/almadina/android/app/.cxx/RelWithDebInfo/1k5x5mm1/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Flutter/almadina/android/app/.cxx/RelWithDebInfo/1k5x5mm1/armeabi-v7a/CMakeFiles/rebuild_cache.dir

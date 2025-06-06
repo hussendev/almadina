@@ -84,10 +84,9 @@ class AuthRepository {
   //
   Future<void> logout() async {
     try {
-      // await _apiProvider.logout();
+      await _apiProvider.logout();
       await _clearUserData();
     } catch (e) {
-      // Even if API fails, clear local data
       await _clearUserData();
       rethrow;
     }
