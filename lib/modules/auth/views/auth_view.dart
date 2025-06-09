@@ -53,7 +53,7 @@ class AuthView extends GetView<AuthController> {
                   const Row(),
                   CustomButton(
                     text: AppStrings.login,
-                      fontSize: 25,
+                      fontSize: 20.sp,
                     onPressed: (){
                       Get.toNamed(
                         AppRoutes.LOGIN
@@ -61,11 +61,12 @@ class AuthView extends GetView<AuthController> {
                     },
                   ),
 
-                  const SizedBox(
-                    height: 30
+                   SizedBox(
+                    height: 30.h
                   ),
                   CustomButton(
-                    fontSize: 25,
+
+                    fontSize: 22.sp,
                     text: AppStrings.register,
                     onPressed: (){
                       Get.toNamed(

@@ -10,8 +10,8 @@ class UserModel {
   @HiveField(1)
   final String firstName;
 
-  @HiveField(2)
-  final String lastName;
+  // @HiveField(2)
+  // final String lastName;
 
   @HiveField(3)
   final String mobile;
@@ -31,7 +31,7 @@ class UserModel {
   UserModel({
     required this.id,
     required this.firstName,
-    required this.lastName,
+    // required this.lastName,
     required this.mobile,
     this.email,
     required this.password,
@@ -43,7 +43,7 @@ class UserModel {
     return UserModel(
       id: json['id'],
       firstName: json['first_name'],
-      lastName: json['last_name'],
+      // lastName: json['last_name'],
       email: json['email'],
       mobile: json['phone'],
       password: json['password'],
@@ -56,7 +56,7 @@ class UserModel {
     return {
       'id': id,
       'first_name': firstName,
-      'last_name': lastName,
+      // 'last_name': lastName,
       'mobile': mobile,
       'email': email,
       'password': password,

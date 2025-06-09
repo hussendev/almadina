@@ -51,8 +51,8 @@ class LoginView extends GetView<AuthController> {
                 children: [
                   Row(),
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.mobileController,
@@ -63,8 +63,8 @@ class LoginView extends GetView<AuthController> {
                   ),
                    SizedBox(height: 20.h),
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child:  AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.passwordController,

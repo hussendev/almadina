@@ -43,14 +43,14 @@ class RegisterView extends GetView<AuthController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.22),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
             Form(
               child: Column(
                 children: [
                   Row(),
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.registerMobileController,
@@ -59,10 +59,10 @@ class RegisterView extends GetView<AuthController> {
                       keyboardType: TextInputType.phone,
                     ),
                   ),
-                   SizedBox(height: 20.h),
+                   SizedBox(height: 15.h),
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height:60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.firstNameController,
@@ -70,21 +70,10 @@ class RegisterView extends GetView<AuthController> {
                       hint: AppStrings.firstName,
                       keyboardType: TextInputType.name,),
                   ),
-                   SizedBox(height: 20.h),
+                   SizedBox(height: 15.h),
                   SizedBox(
-                    height: 60,
-                    width: 275,
-                    child: AuthTextField(
-                      backgroundImage: AssetsPath.textFeildBackground,
-                      controller: controller.secondNameController,
-                      label: '',
-                      hint: AppStrings.secondName,
-                      keyboardType: TextInputType.name,),
-                  ),
-                   SizedBox(height: 20.h),
-                  SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.emailController,
@@ -92,10 +81,10 @@ class RegisterView extends GetView<AuthController> {
                       hint: AppStrings.email,
                       keyboardType: TextInputType.name,),
                   ),
-                   SizedBox(height: 20.h),
+                   SizedBox(height: 15.h),
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child:  AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.registerPasswordController,
@@ -104,13 +93,13 @@ class RegisterView extends GetView<AuthController> {
                       obscureText: true,
                     ),
                   ),
-                   SizedBox(height: 25.h),
+                   SizedBox(height: 20.h),
                   Obx(
-                    () => controller.isLoading.value ? CircularProgressIndicator(): SizedBox(
-                      height: 52,
-                      width: 275,
+                    () => controller.isLoading.value ? const CircularProgressIndicator(): SizedBox(
+                      height: 52.h,
+                      width: 275.w,
                       child:  CustomButton(
-                        fontSize: 25,
+                        fontSize: 22.sp,
                         text: AppStrings.register,
                         onPressed: () => controller.register(),
                       ),

@@ -48,14 +48,6 @@ class OtpVerificationView extends GetView<AuthController> {
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * 0.20),
 
-            // Email Icon
-            Icon(
-              Icons.email_outlined,
-              size: 80,
-              color: AppTheme.primaryColor,
-            ),
-
-            SizedBox(height: 30.h),
 
             // Title
             Text(
@@ -112,8 +104,8 @@ class OtpVerificationView extends GetView<AuthController> {
                         () => controller.isLoading.value
                         ? CircularProgressIndicator()
                         : SizedBox(
-                      height: 52,
-                      width: 275,
+                      height: 52.h,
+                      width: 275.w,
                       child: CustomButton(
                         fontSize: 20.sp,
                         text: 'تحقق',

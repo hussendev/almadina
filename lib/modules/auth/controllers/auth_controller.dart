@@ -112,30 +112,45 @@ class AuthController extends GetxController {
   }
 
   Future<void> verifyOtp() async {
-    String otp = otpControllers.map((controller) => controller.text).join();
+    try {
+      isLoading.value = true;
 
-    if (otp.length != 4) {
+      // Collect OTP code from controllers
+      _otpCode = otpControllers.map((c) => c.text).join();
+
+      if (_otpCode.length != 4) {
+        Get.snackbar(
+          'خطأ',
+          'يرجى إدخال رمز مكون من 4 أرقام',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      // Call the real API to verify OTP
+      await _authRepository.verifyOtp(code: _otpCode);
+
+      Get.snackbar(
+        'تم التحقق',
+        'تم التحقق من الرمز بنجاح',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+
+      // Navigate to reset password screen
+      Get.to(() => ResetPasswordView(email: forgotPasswordEmailController.text));
+
+    } catch (e) {
       Get.snackbar(
         'خطأ',
-        'يرجى إدخال رمز التحقق كاملاً',
+        e.toString().contains('message') ? e.toString() : 'حدث خطأ أثناء التحقق من الرمز',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      return;
+    } finally {
+      isLoading.value = false;
     }
-
-    // Store the OTP for later use in password reset
-    _otpCode = otp;
-
-    Get.snackbar(
-      'تم التحقق',
-      'يمكنك الآن إدخال كلمة المرور الجديدة',
-      backgroundColor: Colors.green,
-      colorText: Colors.white,
-    );
-
-    // Navigate to reset password screen
-    Get.off(() => ResetPasswordView(email: forgotPasswordEmailController.text));
   }
 
   Future<void> resendOtp(String email) async {
@@ -217,8 +232,6 @@ class AuthController extends GetxController {
 
       // Call the real API to reset password
       await _authRepository.resetPassword(
-        email: email,
-        code: _otpCode,
         password: newPasswordController.text,
         passwordConfirmation: confirmPasswordController.text,
       );
@@ -235,7 +248,7 @@ class AuthController extends GetxController {
       _clearForgotPasswordControllers();
 
       // Navigate back to login (remove all previous screens)
-      Get.offAllNamed(AppRoutes.LOGIN);
+      Get.offAllNamed(AppRoutes.Auth);
 
     } catch (e) {
       Get.snackbar(
@@ -374,10 +387,16 @@ class AuthController extends GetxController {
     // print(firstNameController.text.isEmpty ||secondNameController.text.isEmpty||emailController.text.isEmpty||
     //     registerMobileController.text.isEmpty ||
     //     registerPasswordController.text.isEmpty);
-    if (firstNameController.text.isEmpty ||secondNameController.text.isEmpty||emailController.text.isEmpty||
+    if (firstNameController.text.isEmpty ||emailController.text.isEmpty||
         registerMobileController.text.isEmpty ||
         registerPasswordController.text.isEmpty) {
-      error.value = 'الرجاء إدخال جميع البيانات المطلوبة';
+      Get.snackbar(
+        'خطأ',
+        'الرجاء إدخال جميع البيانات المطلوبة',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
@@ -387,7 +406,6 @@ class AuthController extends GetxController {
 
       final result = await _authRepository.register(
         firstName: firstNameController.text,
-        secondName: secondNameController.text,
         mobile: registerMobileController.text,
         email: emailController.text,
         password: registerPasswordController.text,

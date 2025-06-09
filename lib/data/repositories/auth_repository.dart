@@ -35,13 +35,12 @@ class AuthRepository {
 
   Future<UserModel> register({
     required String firstName,
-    required String secondName,
     required String mobile,
     required String email,
     required String password,
   }) async {
     try {
-      final response = await _apiProvider.register(firstName:firstName ,seceondName: secondName, mobile: mobile,email: email,password: password);
+      final response = await _apiProvider.register(firstName:firstName , mobile: mobile,email: email,password: password);
       if (response.statusCode == 201) {
 
         final user = UserModel.fromJson(response.body['customer']);
@@ -67,17 +66,25 @@ class AuthRepository {
     }
   }
 
+  Future<void> verifyOtp({required String code}) async {
+    try {
+      final response = await _apiProvider.verifyOtp(code);
+
+      if (response.statusCode != 200) {
+        throw response.body['message'] ?? 'Failed to send OTP code';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // NEW: Reset password with OTP
   Future<void> resetPassword({
-    required String email,
-    required String code,
     required String password,
     required String passwordConfirmation,
   }) async {
     try {
       final response = await _apiProvider.resetPassword(
-        email: email,
-        code: code,
         password: password,
         passwordConfirmation: passwordConfirmation,
       );

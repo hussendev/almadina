@@ -47,7 +47,7 @@ class HomeView extends GetView<HomeController> {
             height: 52,
             width: 275,
             child:  CustomButton(
-              fontSize: 25,
+              fontSize: 18.sp,
               text: AppStrings.home,
               onPressed: ()async =>await controller.launchURL('https://al-madenah.com/') ,
             ),
@@ -57,7 +57,7 @@ class HomeView extends GetView<HomeController> {
             height: 52,
             width: 275,
             child:  CustomButton(
-              fontSize: 25,
+              fontSize: 18.sp,
               text: AppStrings.discount,
               onPressed: ()async =>await controller.launchURL('https://al-madenah.com/') ,
             ),
@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
             height: 52,
             width: 275,
             child:  CustomButton(
-              fontSize: 25,
+              fontSize: 18.sp,
               text: AppStrings.logout,
               onPressed: ()async{
                 await authController.logout();

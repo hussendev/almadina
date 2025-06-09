@@ -77,8 +77,8 @@ class ForgotPasswordView extends GetView<AuthController> {
 
                   // Email Input
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.forgotPasswordEmailController,
@@ -95,8 +95,8 @@ class ForgotPasswordView extends GetView<AuthController> {
                         () => controller.isLoading.value
                         ? CircularProgressIndicator()
                         : SizedBox(
-                      height: 52,
-                      width: 275,
+                      height: 52.h,
+                      width: 275.w,
                       child: CustomButton(
                         fontSize: 20.sp,
                         text: 'إرسال',

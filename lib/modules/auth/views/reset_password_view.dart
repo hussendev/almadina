@@ -47,21 +47,13 @@ class ResetPasswordView extends GetView<AuthController> {
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * 0.2),
 
-            // Lock Icon
-            Icon(
-              Icons.lock_reset,
-              size: 80,
-              color: AppTheme.primaryColor,
-            ),
-
-            SizedBox(height: 10.h),
 
             // Title
             Text(
               'إعادة تعيين كلمة المرور',
               style: TextStyle(
                 fontFamily: GoogleFonts.cairo().fontFamily,
-                fontSize: 28.sp,
+                fontSize: 25.sp,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.textColor,
               ),
@@ -89,8 +81,8 @@ class ResetPasswordView extends GetView<AuthController> {
 
                   // New Password Input
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.newPasswordController,
@@ -104,8 +96,8 @@ class ResetPasswordView extends GetView<AuthController> {
 
                   // Confirm Password Input
                   SizedBox(
-                    height: 60,
-                    width: 275,
+                    height: 60.h,
+                    width: 275.w,
                     child: AuthTextField(
                       backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.confirmPasswordController,
@@ -122,8 +114,8 @@ class ResetPasswordView extends GetView<AuthController> {
                         () => controller.isLoading.value
                         ? const CircularProgressIndicator()
                         : SizedBox(
-                      height: 52,
-                      width: 275,
+                      height: 52.h,
+                      width: 275.w,
                       child: CustomButton(
                         fontSize: 20.sp,
                         text: 'تغيير',

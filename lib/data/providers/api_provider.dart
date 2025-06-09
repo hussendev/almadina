@@ -46,13 +46,11 @@ class ApiProvider extends GetConnect {
   Future<Response> register(
       {
         required String firstName,
-        required String seceondName,
         required String email,
         required String mobile,
         required String password}) async {
     final body = jsonEncode({
       'first_name': firstName,
-      'last_name': seceondName,
       'email': email,
       'phone': mobile,
       'password': password,
@@ -78,10 +76,26 @@ class ApiProvider extends GetConnect {
     }
   }
 
+  Future<Response> verifyOtp(String code) async {
+    try {
+      final response = await post(
+        '/customers/verify-code',
+        {
+          'code': code,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // Reset password with OTP
   Future<Response> resetPassword({
-    required String email,
-    required String code,
     required String password,
     required String passwordConfirmation,
   }) async {
@@ -89,10 +103,8 @@ class ApiProvider extends GetConnect {
       final response = await post(
         '/customers/reset-password',
         {
-          'email': email,
-          'code': code,
           'password': password,
-          'passwordConfirmation': passwordConfirmation,
+          'password_confirmation': passwordConfirmation,
         },
         headers: {
           'Content-Type': 'application/json',
