@@ -20,6 +20,7 @@ class AuthTextField extends StatefulWidget {
   final bool enabled;
   final FocusNode? focusNode;
   final ValueChanged<String>? onChanged;
+  final String? backgroundImage; // Path to background image asset
 
   const AuthTextField({
     Key? key,
@@ -39,6 +40,7 @@ class AuthTextField extends StatefulWidget {
     this.enabled = true,
     this.focusNode,
     this.onChanged,
+    this.backgroundImage, // Path to background image
   }) : super(key: key);
 
   @override
@@ -59,86 +61,76 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.label.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              widget.label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: AppTheme.textColor,
-              ),
-            ),
-          ),
-        TextFormField(
-          controller: widget.controller,
-          obscureText: _obscureText,
-          keyboardType: widget.keyboardType,
-          validator: widget.validator,
-          inputFormatters: widget.inputFormatters,
-          readOnly: widget.readOnly,
-          onTap: widget.onTap,
-          maxLength: widget.maxLength,
-          maxLines: widget.maxLines,
-          enabled: widget.enabled,
-          focusNode: widget.focusNode,
-          onChanged: widget.onChanged,
-          style: const TextStyle(
-            fontSize: 16,
-            color: AppTheme.textColor,
-          ),
-          decoration: InputDecoration(
-            hintText: widget.hint,
-            hintStyle: TextStyle(
-              color: AppTheme.greyColor.withOpacity(0.7),
-              fontSize: 16,
-            ),
-            prefixIcon: widget.prefixIcon,
-            suffixIcon: widget.obscureText
-                ? IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
-                color: AppTheme.greyColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            )
-                : widget.suffixIcon,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
-            ),
-            fillColor: Colors.white,
-            filled: true,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 16,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                color: AppTheme.greyColor.withOpacity(0.3),
-                width: 1,
+        Container(
+          decoration: BoxDecoration(
+            // borderRadius: BorderRadius.circular(12),
+            // Use background image if provided
+            image: widget.backgroundImage != null
+                ? DecorationImage(
+              image: AssetImage(widget.backgroundImage!),
+              fit: BoxFit.cover,
+              // Add overlay for text readability
 
-              ),
+            )
+                : null,
+            // Fallback color if no image
+
+            // Subtle shadow for depth
+
+          ),
+          child: TextFormField(
+            controller: widget.controller,
+            obscureText: _obscureText,
+            keyboardType: widget.keyboardType,
+            validator: widget.validator,
+            inputFormatters: widget.inputFormatters,
+            readOnly: widget.readOnly,
+            onTap: widget.onTap,
+            maxLength: widget.maxLength,
+            maxLines: widget.maxLines,
+            enabled: widget.enabled,
+            focusNode: widget.focusNode,
+            onChanged: widget.onChanged,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF5D4E37), // Darker brown text
+              fontWeight: FontWeight.w500,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: AppTheme.primaryColor,
-                width: 1,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              hintStyle: TextStyle(
+                color: const Color(0xFF8B7355).withOpacity(0.8),
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Colors.red,
-                width: 1,
-              ),
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: widget.obscureText
+                  ? IconButton(
+                padding: EdgeInsets.zero,
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: const Color(0xFF8B7355),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
+                  : widget.suffixIcon,
+              // Remove all borders to use container decoration
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              focusedErrorBorder: InputBorder.none,
+              // Transparent background
+              fillColor: Colors.transparent,
+              filled: true,
+              // contentPadding: const EdgeInsets.symmetric(
+              //   horizontal: 20,
+              //   vertical: 18,
+              // ),
             ),
           ),
         ),

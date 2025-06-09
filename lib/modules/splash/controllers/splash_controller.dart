@@ -17,13 +17,13 @@ class SplashController extends GetxController {
 
     if (_appService.isFirstTime()) {
       await _appService.setFirstTime(false);
-      Get.offAllNamed(AppRoutes.LOGIN);
+      Get.offAllNamed(AppRoutes.Auth);
     } else {
       //check if user is logged in
       if (_appService.isLoggedIn()) {
         Get.offAllNamed(AppRoutes.HOME);
       } else {
-        Get.offAllNamed(AppRoutes.LOGIN);
+        Get.offAllNamed(AppRoutes.Auth);
       }
 
     }

@@ -52,67 +52,71 @@ class RegisterView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child: AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.registerMobileController,
                       label: '',
                       hint: AppStrings.mobile,
                       keyboardType: TextInputType.phone,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   SizedBox(
                     height: 60,
                     width: 275,
                     child: AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.firstNameController,
                       label: '',
                       hint: AppStrings.firstName,
                       keyboardType: TextInputType.name,),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   SizedBox(
                     height: 60,
                     width: 275,
                     child: AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.secondNameController,
                       label: '',
                       hint: AppStrings.secondName,
                       keyboardType: TextInputType.name,),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   SizedBox(
                     height: 60,
                     width: 275,
                     child: AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.emailController,
                       label: '',
                       hint: AppStrings.email,
                       keyboardType: TextInputType.name,),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   SizedBox(
                     height: 60,
                     width: 275,
                     child:  AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.registerPasswordController,
                       label: '',
                       hint: AppStrings.secretCode,
                       obscureText: true,
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                   Obx(
                     () => controller.isLoading.value ? CircularProgressIndicator(): SizedBox(
                       height: 52,
                       width: 275,
                       child:  CustomButton(
+                        fontSize: 25,
                         text: AppStrings.register,
                         onPressed: () => controller.register(),
-                        type: ButtonType.primary,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 60),
-                  _buildLoginSection(),
+                  // _buildLoginSection(),
                 ],
               ),
             ),
@@ -122,32 +126,4 @@ class RegisterView extends GetView<AuthController> {
     );
   }
 
-
-
-  Widget _buildLoginSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-         Text(
-          AppStrings.alreadyHaveAccount,
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: GoogleFonts.cairo().fontFamily,
-            color: AppTheme.textColor,
-          ),
-        ),
-        TextButton(
-          onPressed: () => Get.offAllNamed(AppRoutes.LOGIN),
-          child: const Text(
-            AppStrings.login,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.primaryColor,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }

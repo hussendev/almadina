@@ -30,33 +30,11 @@ class LoginView extends GetView<AuthController> {
               fit: BoxFit.fill,
             ),
             _buildLoginForm(context),
-            // if (controller.isLoading.value)
-            //   const FullScreenLoader(
-            //     message: 'جاري تسجيل الدخول...',
-            //   ),
+
           ],
         ),
       )
-      // body: Obx(() {
-      //   return SafeArea(
-      //     child: Stack(
-      //       children: [
-      //         Image.asset(
-      //           AssetsPath.loginBackground,
-      //           width: 390.w,
-      //           height: 990.h,
-      //           fit: BoxFit.fill,
-      //         ),
-      //
-      //         // _buildLoginForm(context),
-      //         // if (controller.isLoading.value)
-      //         //   const FullScreenLoader(
-      //         //     message: 'جاري تسجيل الدخول...',
-      //         //   ),
-      //       ],
-      //     ),
-      //   );
-      // }),
+
     );
   }
 
@@ -67,7 +45,7 @@ class LoginView extends GetView<AuthController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.27),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
             Form(
               child: Column(
                 children: [
@@ -76,36 +54,34 @@ class LoginView extends GetView<AuthController> {
                     height: 60,
                     width: 275,
                     child: AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.mobileController,
                       label: '',
                       hint: AppStrings.mobile,
                       keyboardType: TextInputType.phone,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   SizedBox(
                     height: 60,
                     width: 275,
                     child:  AuthTextField(
+                      backgroundImage: AssetsPath.textFeildBackground,
                       controller: controller.passwordController,
                       label: '',
                       hint: AppStrings.secretCode,
                       obscureText: true,
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                   Obx(
-                    () => controller.isLoading.value ? CircularProgressIndicator() : SizedBox(
-                      height: 52,
-                      width: 275,
-                      child:  CustomButton(
-                        text: AppStrings.login,
-                        onPressed: () => controller.login(),
-                        type: ButtonType.primary,
-                      ),
+                    () => controller.isLoading.value ? CircularProgressIndicator() :  CustomButton(
+                      fontSize: 20.sp,
+                      text: AppStrings.login,
+                      onPressed: () => controller.login(),
                     ),
                   ),
-                  const SizedBox(height: 60),
+                   SizedBox(height: 120.h),
                   _buildRegisterSection(),
                 ],
               ),
@@ -117,41 +93,18 @@ class LoginView extends GetView<AuthController> {
   }
 
   Widget _buildRegisterSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'نسيت كلمة المرور',
-                style: TextStyle(
-                  fontFamily: GoogleFonts.cairo().fontFamily,
-            fontSize: 16,
-            color: AppTheme.textColor,
-          ),
+    return  GestureDetector(
+      onTap: () {
+        Get.toNamed(AppRoutes.FORGOT_PASSWORD);
+      },
+      child: Text(
+        'نسيت كلمة المرور',
+        style: TextStyle(
+          fontFamily: GoogleFonts.cairo().fontFamily,
+          fontSize: 20.sp,
+          color: AppTheme.textColor,
         ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Text(
-          '||',
-          style: TextStyle(
-            fontFamily: GoogleFonts.cairo().fontFamily,
-            fontSize: 16,
-            color: AppTheme.textColor,
-          ),
-        ),
-        TextButton(
-
-          onPressed: () => Get.toNamed(AppRoutes.REGISTER),
-          child: const Text(
-            AppStrings.register,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.primaryColor,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

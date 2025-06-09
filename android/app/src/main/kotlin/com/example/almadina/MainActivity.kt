@@ -1,4 +1,4 @@
-package com.example.almadina
+package com.almadina.app
 
 import io.flutter.embedding.android.FlutterActivity
 

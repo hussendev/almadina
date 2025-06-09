@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
           title: 'المدينة',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          
           themeMode: ThemeMode.light,
           locale: const Locale('ar'),
           fallbackLocale: const Locale('ar'),

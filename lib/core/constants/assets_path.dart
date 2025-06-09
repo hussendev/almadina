@@ -18,4 +18,6 @@ class AssetsPath {
   static const String splashBackground = '${imagesPath}splash_background.png';
   static const String loginBackground = '${imagesPath}login_background.png';
   static const String homeBackground = '${imagesPath}home_background.png';
+  static const String containerBackground = '${imagesPath}backgorund_container.png';
+  static const String textFeildBackground = '${imagesPath}text_feild_background.png';
 }

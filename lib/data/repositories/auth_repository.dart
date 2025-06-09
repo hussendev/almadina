@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../core/routes/app_routes.dart';
 import '../models/user_model.dart';
 import '../providers/api_provider.dart';
 import '../services/storage_service.dart';
@@ -54,38 +55,47 @@ class AuthRepository {
     }
   }
 
-  // Future<void> forgotPassword({required String mobile}) async {
-  //   try {
-  //     final response = await _apiProvider.forgotPassword(mobile);
-  //
-  //     if (response.statusCode != 200) {
-  //       throw response.body['message'] ?? 'Failed to send reset code';
-  //     }
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-  //
-  // Future<void> resetPassword({
-  //   required String mobile,
-  //   required String code,
-  //   required String newPassword,
-  // }) async {
-  //   try {
-  //     final response = await _apiProvider.resetPassword(mobile, code, newPassword);
-  //
-  //     if (response.statusCode != 200) {
-  //       throw response.body['message'] ?? 'Failed to reset password';
-  //     }
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-  //
+  Future<void> sendForgotPasswordOtp({required String email}) async {
+    try {
+      final response = await _apiProvider.sendForgotPasswordOtp(email);
+
+      if (response.statusCode != 200) {
+        throw response.body['message'] ?? 'Failed to send OTP code';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // NEW: Reset password with OTP
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      final response = await _apiProvider.resetPassword(
+        email: email,
+        code: code,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+      );
+
+      if (response.statusCode != 200) {
+        throw response.body['message'] ?? 'Failed to reset password';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
   Future<void> logout() async {
     try {
-      await _apiProvider.logout();
       await _clearUserData();
+      // navigate to login screen if needed
+      Get.offAllNamed(AppRoutes.LOGIN);
     } catch (e) {
       await _clearUserData();
       rethrow;

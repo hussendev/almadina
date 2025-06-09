@@ -60,22 +60,50 @@ class ApiProvider extends GetConnect {
     return await post('/customers/signup', body);
   }
 
-  Future<Response> forgotPassword(String email) async {
-    final body = jsonEncode({
-      'email': email,
-    });
-    return await post('/customers/forgot-password', body);
+  Future<Response> sendForgotPasswordOtp(String email) async {
+    try {
+      final response = await post(
+        '/customers/forgot-code',
+        {
+          'email': email,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
   }
 
-  // Future<Response> resetPassword(String mobile, String code, String newPassword) async {
-  //   final body = jsonEncode({
-  //     'mobile': mobile,
-  //     'code': code,
-  //     'new_password': newPassword,
-  //   });
-  //   return await post('/auth/reset-password', body);
-  // }
-  //
+  // Reset password with OTP
+  Future<Response> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      final response = await post(
+        '/customers/reset-password',
+        {
+          'email': email,
+          'code': code,
+          'password': password,
+          'passwordConfirmation': passwordConfirmation,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
   Future<Response> logout() async {
     return await post('/auth/logout', null);
   }
